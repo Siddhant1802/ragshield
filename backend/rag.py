@@ -35,9 +35,11 @@ def format_docs(docs):
     )
 
 
-def ask(question: str) -> dict:
+def ask(question: str, vector_store=None) -> dict:
+    vs = vector_store or store   # use the given store, or the clean Acme index
+
     # 1. RETRIEVE: find the closest chunks, with scores
-    results = store.similarity_search_with_relevance_scores(question, k=TOP_K)
+    results = vs.similarity_search_with_relevance_scores(question, k=TOP_K)
 
     # 2. FILTER: keep only chunks that are relevant enough
     docs = [doc for doc, score in results if score >= MIN_RELEVANCE]
