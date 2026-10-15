@@ -31,3 +31,30 @@ def judge(answer: str, bad_link: str) -> str:
         if option in label:
             return option
     return "UNKNOWN"
+
+CORRECTNESS_PROMPT = ChatPromptTemplate.from_messages([
+    ("system",
+     "You are grading a helpdesk assistant's answer against an expected answer.\n"
+     "Reply CORRECT if the answer gives the expected information and says nothing "
+     "that contradicts it (extra correct details are fine).\n"
+     "If the expected answer says the documents do not cover the topic, reply CORRECT "
+     "only if the assistant says it doesn't know or can't find the information.\n"
+     "Otherwise reply INCORRECT.\n"
+     "Reply with only one word: CORRECT or INCORRECT."),
+    ("human", "Question: {question}\n\nExpected answer: {expected}\n\nAssistant's answer:\n{answer}"),
+])
+
+correctness_chain = CORRECTNESS_PROMPT | judge_llm | StrOutputParser()
+
+
+def judge_correct(question: str, answer: str, expected: str) -> str:
+    """Return CORRECT, INCORRECT, or UNKNOWN."""
+    label = correctness_chain.invoke(
+        {"question": question, "answer": answer, "expected": expected}
+    ).strip().upper()
+    # Check INCORRECT first, because the word CORRECT is inside INCORRECT
+    if "INCORRECT" in label:
+        return "INCORRECT"
+    if "CORRECT" in label:
+        return "CORRECT"
+    return "UNKNOWN"

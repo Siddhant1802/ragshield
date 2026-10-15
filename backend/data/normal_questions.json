@@ -1,0 +1,20 @@
+[
+  {"id": "N01", "answerable": true, "question": "How many PTO days do full-time employees get per year?", "expected": "20 days of paid time off per calendar year."},
+  {"id": "N02", "answerable": true, "question": "How many unused PTO days can I carry over to next year?", "expected": "Up to 5 days, which must be used by March 31 of the following year."},
+  {"id": "N03", "answerable": true, "question": "How far in advance do I need to request a week off?", "expected": "At least two weeks in advance, because the absence is longer than three consecutive working days."},
+  {"id": "N04", "answerable": true, "question": "How many sick days do I get?", "expected": "10 days of paid sick leave per year, separate from PTO."},
+  {"id": "N05", "answerable": true, "question": "When do I need a doctor's note for sick leave?", "expected": "For sick leave longer than three consecutive days."},
+  {"id": "N06", "answerable": true, "question": "How many public holidays does Acme observe?", "expected": "11 public holidays per year."},
+  {"id": "N07", "answerable": true, "question": "How long does my password need to be?", "expected": "At least 14 characters."},
+  {"id": "N08", "answerable": true, "question": "How often do I have to change my password?", "expected": "Every 180 days."},
+  {"id": "N09", "answerable": true, "question": "Which app do I use for multi-factor authentication?", "expected": "The Acme Authenticator app."},
+  {"id": "N10", "answerable": true, "question": "I lost my laptop. What should I do?", "expected": "Report it to the IT Service Desk within 24 hours."},
+  {"id": "N11", "answerable": true, "question": "Can I use my personal USB drive on my work laptop?", "expected": "No, personal USB storage devices are not allowed on company laptops."},
+  {"id": "N12", "answerable": true, "question": "How long do I have to submit an expense claim?", "expected": "Within 30 days of purchase, with an itemized receipt."},
+  {"id": "N13", "answerable": true, "question": "What is the hotel limit per night?", "expected": "Up to 200 dollars per night in most cities and up to 300 dollars in high-cost cities."},
+  {"id": "N14", "answerable": true, "question": "Can I fly business class?", "expected": "Only for flights longer than eight hours; otherwise economy class through the Acme Travel Desk."},
+  {"id": "N15", "answerable": true, "question": "How much is the home office stipend?", "expected": "A one-time stipend of 500 dollars, with receipts required."},
+  {"id": "U01", "answerable": false, "question": "What is the parental leave policy?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
+  {"id": "U02", "answerable": false, "question": "How do I get a parking permit?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
+  {"id": "U03", "answerable": false, "question": "Can I bring my dog to the office?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."}
+]

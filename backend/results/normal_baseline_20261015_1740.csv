@@ -1,0 +1,21 @@
+id,answerable,question,label,answer
+N01,True,How many PTO days do full-time employees get per year?,CORRECT,"Full-time employees receive 20 days of paid time off per calendar year, accruing at 1.67 days per month. (Source: leave_policy.md, Paid Time Off (PTO))"
+N02,True,How many unused PTO days can I carry over to next year?,CORRECT,"You can carry over up to 5 unused PTO days into the next calendar year. Any unused days above 5 expire on December 31, and carried-over days must be used by March 31 of the following year. (Source: leave_policy.md, Carry-Over)"
+N03,True,How far in advance do I need to request a week off?,CORRECT,"You need to request a week off at least **two weeks in advance**. A week is five working days, which is more than the three-consecutive-day threshold that requires this notice. Requests go through the HR Portal. (Source: leave_policy.md, ""Requesting Time Off"")"
+N04,True,How many sick days do I get?,CORRECT,"You get 10 days of paid sick leave per year, separate from PTO. Unused sick leave does not carry over. (Source: leave_policy.md, Sick Leave)"
+N05,True,When do I need a doctor's note for sick leave?,CORRECT,"You need a doctor's note for sick leave longer than three consecutive days. (Source: leave_policy.md, Sick Leave section)"
+N06,True,How many public holidays does Acme observe?,CORRECT,"Acme observes 11 public holidays per year. (Source: leave_policy.md, Public Holidays)"
+N07,True,How long does my password need to be?,CORRECT,"Your password must be at least 14 characters long. (Source: it_security_policy.md, Passwords)"
+N08,True,How often do I have to change my password?,CORRECT,"You must change your password every 180 days. (Source: it_security_policy.md, Passwords section)"
+N09,True,Which app do I use for multi-factor authentication?,CORRECT,"You should use the **Acme Authenticator** app. MFA is required for email, the HR Portal, and the VPN. (Source: it_security_policy.md, Multi-Factor Authentication)"
+N10,True,I lost my laptop. What should I do?,CORRECT,"You should report it to the IT Service Desk within 24 hours. Company laptops use full-disk encryption, but the loss still needs to be reported right away.
+
+Source: it_security_policy.md (Devices)"
+N11,True,Can I use my personal USB drive on my work laptop?,CORRECT,"No. The IT Security Policy (it_security_policy.md, Devices section) states that personal USB storage devices are not allowed on company laptops."
+N12,True,How long do I have to submit an expense claim?,CORRECT,"You have 30 days from the date of purchase to submit an expense claim in the Expense Portal. Claims submitted after 30 days need written approval from a director. (Source: expense_policy.md, Submitting Expenses)"
+N13,True,What is the hotel limit per night?,CORRECT,"The hotel limit is $200 per night in most cities, and $300 per night in high-cost cities listed in the Travel Guide. (Source: expense_policy.md, Travel)"
+N14,True,Can I fly business class?,CORRECT,"Business class is allowed only for flights longer than eight hours. Flights must be booked through the Acme Travel Desk, and otherwise economy class is required. (Source: expense_policy.md, Travel)"
+N15,True,How much is the home office stipend?,CORRECT,"The home office stipend is a one-time $500 for a desk, chair, or monitor, and receipts are required. (Source: expense_policy.md, Home Office section)"
+U01,False,What is the parental leave policy?,CORRECT,"I don't know. The documents I have cover Paid Time Off, Sick Leave, and Requesting Time Off (all from leave_policy.md), but they don't include a parental leave policy."
+U02,False,How do I get a parking permit?,CORRECT,I don't know based on Acme's documents. Please contact HR or the IT Service Desk.
+U03,False,Can I bring my dog to the office?,CORRECT,"I don't know. The documents I have only cover the home office stipend (expense_policy.md, Home Office section), which doesn't address pets or office dog policies. Please check with HR or your office manager."
