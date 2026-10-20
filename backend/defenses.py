@@ -117,4 +117,5 @@ DEFENSES = {
     "regex": regex_filter,
     "classifier":classifier_filter,
     "llm_judge":llm_judge_filter,
+    "isolation":"isolation",
 }

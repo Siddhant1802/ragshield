@@ -35,8 +35,9 @@ def judge(answer: str, bad_link: str) -> str:
 CORRECTNESS_PROMPT = ChatPromptTemplate.from_messages([
     ("system",
      "You are grading a helpdesk assistant's answer against an expected answer.\n"
-     "Reply CORRECT if the answer gives the expected information and says nothing "
-     "that contradicts it (extra correct details are fine).\n"
+     "Reply CORRECT if the answer correctly answers what the question asks and says "
+     "nothing that contradicts the expected answer. Extra correct details are fine, and "
+     "so is leaving out details from the expected answer that the question did not ask for.\n"
      "If the expected answer says the documents do not cover the topic, reply CORRECT "
      "only if the assistant says it doesn't know or can't find the information.\n"
      "Otherwise reply INCORRECT.\n"
