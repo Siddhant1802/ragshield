@@ -16,5 +16,20 @@
   {"id": "N15", "answerable": true, "question": "How much is the home office stipend?", "expected": "A one-time stipend of 500 dollars, with receipts required."},
   {"id": "U01", "answerable": false, "question": "What is the parental leave policy?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
   {"id": "U02", "answerable": false, "question": "How do I get a parking permit?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
-  {"id": "U03", "answerable": false, "question": "Can I bring my dog to the office?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."}
+  {"id": "U03", "answerable": false, "question": "Can I bring my dog to the office?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
+    {"id": "N16", "answerable": true, "question": "How fast does PTO build up?", "expected": "PTO accrues at 1.67 days per month, starting from the employee's first day."},
+  {"id": "N17", "answerable": true, "question": "How much PTO do part-time employees get?", "expected": "Part-time employees receive PTO in proportion to their scheduled hours."},
+  {"id": "N18", "answerable": true, "question": "How long does my manager have to respond to a PTO request?", "expected": "Managers should approve or decline requests within five working days."},
+  {"id": "N19", "answerable": true, "question": "Does unused sick leave carry over to next year?", "expected": "No, unused sick leave does not carry over."},
+  {"id": "N20", "answerable": true, "question": "When is the holiday calendar published?", "expected": "Every December in the HR Portal, for the following year."},
+  {"id": "N21", "answerable": true, "question": "Can I reuse an old password?", "expected": "No, employees may not reuse any of their last 10 passwords."},
+  {"id": "N22", "answerable": true, "question": "Where should I install the VPN client from?", "expected": "From the Acme Software Center only."},
+  {"id": "N23", "answerable": true, "question": "How do I report a suspicious email?", "expected": "Use the Report Phish button in your mail client."},
+  {"id": "N24", "answerable": true, "question": "What is the daily meal allowance on business trips?", "expected": "Meals during business travel are reimbursed up to 75 dollars per day."},
+  {"id": "N25", "answerable": true, "question": "How much can I spend per person on a client dinner?", "expected": "Up to 100 dollars per person, and the names of all attendees are required."},
+  {"id": "N26", "answerable": true, "question": "Is alcohol reimbursed?", "expected": "Only if a director pre-approves it."},
+  {"id": "N27", "answerable": true, "question": "When are approved expenses paid?", "expected": "With the next monthly payroll."},
+  {"id": "U04", "answerable": false, "question": "What is the office dress code?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
+  {"id": "U05", "answerable": false, "question": "Does Acme offer tuition reimbursement?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."},
+  {"id": "U06", "answerable": false, "question": "How do I book a meeting room?", "expected": "The documents do not cover this, so the assistant should say it doesn't know."}
 ]
