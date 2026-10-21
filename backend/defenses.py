@@ -109,13 +109,60 @@ def llm_judge_filter(docs):
         else:
             kept.append(doc)
     return kept, blocked
+# ---------------- Output guard: link allowlist ----------------
+ALLOWED_DOMAINS = ("acme.example",)   # the company's official domains
+
+# Full links like https://something.example/page
+_URL_RE = re.compile(r"https?://[^\s<>()\[\]\"'*]+", re.IGNORECASE)
+# Bare domains like acme-login-help.example (no https://)
+_BARE_DOMAIN_RE = re.compile(
+    r"\b(?:[a-z0-9-]+\.)+(?:com|net|org|io|co|info|biz|app|help|xyz|example)\b",
+    re.IGNORECASE,
+)
 
 
-# All defenses by name. "none" = the baseline bot.
+def _host(link):
+    """'https://password.acme.example/reset' -> 'password.acme.example'"""
+    link = re.sub(r"^https?://", "", link, flags=re.IGNORECASE)
+    return link.split("/")[0].split(":")[0].lower().rstrip(".,;")
+
+
+def _is_allowed(host):
+    return any(host == d or host.endswith("." + d) for d in ALLOWED_DOMAINS)
+
+
+def link_allowlist(answer):
+    """Remove every link in the answer that is not on an official Acme domain."""
+    removed = []
+
+    def check(match):
+        link = match.group(0)
+        host = _host(link)
+        if _is_allowed(host):
+            return link                      # official link: keep it
+        removed.append(host)
+        return "[link removed: not an official Acme website]"
+
+    answer = _URL_RE.sub(check, answer)
+    answer = _BARE_DOMAIN_RE.sub(check, answer)
+
+    blocked = [{"source": "answer", "section": "-", "reason": f"allowlist: removed {h}"}
+               for h in removed]
+    if removed:
+        answer += "\n\nNote: RAGShield removed a link that is not on an official Acme website."
+    return answer, blocked
+
+
+
+# Each defense says which stage(s) of the pipeline it protects:
+#   "retrieval": a function that removes suspicious chunks before Claude sees them
+#   "isolation": True to use the isolated prompt
+#   "output":    a function that cleans the final answer before the employee sees it
 DEFENSES = {
-    "none": None,
-    "regex": regex_filter,
-    "classifier":classifier_filter,
-    "llm_judge":llm_judge_filter,
-    "isolation":"isolation",
+    "none": {},
+    "regex": {"retrieval": regex_filter},
+    "classifier": {"retrieval": classifier_filter},
+    "llm_judge": {"retrieval": llm_judge_filter},
+    "isolation": {"isolation": True},
+    "allowlist": {"output": link_allowlist},
 }

@@ -64,7 +64,9 @@ def format_docs(docs):
     )
 
 def ask(question: str, vector_store=None, defense=None) -> dict:
-    vs = vector_store or store   # use the given store, or the clean Acme index
+    vs = vector_store or store    # use the given store, or the clean Acme index
+    defense = defense or {}       # no defense = empty settings
+    blocked = []
 
     # 1. RETRIEVE: find the closest chunks, with scores
     results = vs.similarity_search_with_relevance_scores(question, k=TOP_K)
@@ -72,20 +74,24 @@ def ask(question: str, vector_store=None, defense=None) -> dict:
     # 2. FILTER: keep only chunks that are relevant enough
     docs = [doc for doc, score in results if score >= MIN_RELEVANCE]
 
-    # 3. DEFEND: filtering defenses remove chunks; isolation changes the prompt instead
-    blocked = []
-    use_isolation = defense == "isolation"
-    if defense is not None and not use_isolation:
-        docs, blocked = defense(docs)
+    # 3. RETRIEVAL GUARD: remove suspicious chunks BEFORE Claude sees them
+    if defense.get("retrieval"):
+        docs, removed = defense["retrieval"](docs)
+        blocked.extend(removed)
 
     if not docs:
         return {"answer": NO_ANSWER, "sources": [], "blocked": blocked}
 
-    # 4. GENERATE: Claude answers using only the chunks that survived
-    if use_isolation:
+    # 4. GENERATE: normal prompt, or the isolated prompt
+    if defense.get("isolation"):
         answer = isolated_chain.invoke({"context": format_docs_isolated(docs), "question": question})
     else:
         answer = chain.invoke({"context": format_docs(docs), "question": question})
+
+    # 5. OUTPUT GUARD: clean the answer BEFORE the employee sees it
+    if defense.get("output"):
+        answer, removed = defense["output"](answer)
+        blocked.extend(removed)
 
     sources = sorted({f"{d.metadata['source']} > {d.metadata.get('h2', '-')}" for d in docs})
     return {"answer": answer, "sources": sources, "blocked": blocked}
