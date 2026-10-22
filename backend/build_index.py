@@ -3,7 +3,7 @@ from loaders import load_documents
 from vectorstore import build_vectorstore
 
 # Load -> split -> embed -> store
-docs = load_documents("data/acme")
+docs = load_documents("data/acme", trust="trusted")
 chunks = smart_split(docs)
 store = build_vectorstore(chunks)
 print(f"Stored {len(chunks)} chunks in Chroma\n")

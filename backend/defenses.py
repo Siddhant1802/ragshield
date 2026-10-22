@@ -179,6 +179,37 @@ def link_allowlist(answer):
         answer += "\n\nNote: RAGShield removed a link that is not on an official Acme website."
     return answer, blocked
 
+# ---------------- Retrieval guard: source trust ----------------
+def source_trust(docs):
+    """Answer from trusted documents whenever possible.
+    If any retrieved chunk is trusted, drop all untrusted ones.
+    If none are trusted, keep the untrusted ones (ask() will add a warning)."""
+    trusted = [d for d in docs if d.metadata.get("trust") == "trusted"]
+    untrusted = [d for d in docs if d.metadata.get("trust") != "trusted"]
+    if trusted:
+        blocked = [{
+            "source": d.metadata.get("source"),
+            "section": d.metadata.get("h2", "-"),
+            "reason": "trust: untrusted source, and trusted documents cover this question",
+        } for d in untrusted]
+        return trusted, blocked
+    return untrusted, []
+
+# ---------------- RAGShield full: combine retrieval guards ----------------
+def chain_filters(*filters):
+    """Run several retrieval guards one after another (cheapest first).
+    Each guard only sees the chunks the previous ones kept."""
+    def combined(docs):
+        all_blocked = []
+        for f in filters:
+            docs, blocked = f(docs)
+            all_blocked.extend(blocked)
+            if not docs:          # nothing left to check
+                break
+        return docs, all_blocked
+    return combined
+
+
 
 
 
@@ -195,4 +226,12 @@ DEFENSES = {
     "isolation": {"isolation": True},
     "allowlist": {"output": link_allowlist},
     "input": {"input": input_guard},
+    "trust": {"retrieval": source_trust, "trust_warning": True},
+    "full": {
+        "input": input_guard,
+        "retrieval": chain_filters(regex_filter, source_trust, llm_judge_filter),
+        "isolation": True,
+        "trust_warning": True,
+        "output": link_allowlist,
+    },
 }

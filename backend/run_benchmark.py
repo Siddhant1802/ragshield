@@ -29,7 +29,7 @@ defense = DEFENSES[defense_name]
 
 attacks = json.loads(Path("data/attacks.json").read_text())
 normal_questions = json.loads(Path("data/normal_questions.json").read_text())
-clean_docs = load_documents("data/acme")
+clean_docs = load_documents("data/acme", trust="trusted")
 embeddings = get_embeddings()
 stamp = f"{datetime.now():%Y%m%d_%H%M}"
 Path("results").mkdir(exist_ok=True)

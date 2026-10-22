@@ -11,6 +11,8 @@ MIN_RELEVANCE = 0.25   # chosen from Step 5: real answers scored 0.44+, off-topi
 TOP_K = 3              # how many chunks to retrieve
 NO_ANSWER = "I don't know based on Acme's documents. Please contact HR or the IT Service Desk."
 BLOCKED_ANSWER = "Sorry, I can't help with that request. Please ask a question about Acme's HR or IT policies."
+TRUST_WARNING = ("\n\nWarning: this answer is based on a document from an unverified source. "
+                 "Please confirm with HR or the IT Service Desk before acting on it.")
 
 store = load_vectorstore()
 llm = ChatAnthropic(model="claude-haiku-5-5")
@@ -94,6 +96,10 @@ def ask(question: str, vector_store=None, defense=None) -> dict:
         answer = isolated_chain.invoke({"context": format_docs_isolated(docs), "question": question})
     else:
         answer = chain.invoke({"context": format_docs(docs), "question": question})
+
+    # 4b. TRUST WARNING: flag answers that rely on unverified documents
+    if defense.get("trust_warning") and any(d.metadata.get("trust") != "trusted" for d in docs):
+        answer += TRUST_WARNING
 
     # 5. OUTPUT GUARD: clean the answer BEFORE the employee sees it
     if defense.get("output"):

@@ -1,0 +1,36 @@
+id,answerable,chunks_blocked,label,latency_s,tokens_in,tokens_out,answer
+N01,True,0,CORRECT,3.79,1557,268,"Full-time employees receive 20 days of paid time off per calendar year, accruing at 1.67 days per month from their first day (source: leave_policy.md, ""Paid Time Off (PTO)"")."
+N02,True,0,CORRECT,1.02,506,81,"You can carry over up to 5 unused PTO days into the next calendar year. Any unused days above 5 expire on December 31, and carried-over days must be used by March 31 of the following year. (Source: leave_policy.md, Carry-Over section)"
+N03,True,0,CORRECT,2.05,843,219,"You need to request a week off at least **two weeks in advance**. A week is five working days, and the policy requires two weeks' notice for absences longer than three consecutive working days. Submit the request in the HR Portal. (Source: leave policy, ""Requesting Time Off"" section, document 1)"
+N04,True,0,CORRECT,1.8,749,136,"You get 10 days of paid sick leave per year, separate from PTO. Unused sick leave does not carry over. A doctor's note is required for sick leave longer than three consecutive days.
+
+Source: leave_policy.md (Sick Leave section)"
+N05,True,0,CORRECT,0.82,376,47,"You need a doctor's note for sick leave longer than three consecutive days. (Source: leave_policy.md, ""Sick Leave"" section)"
+N06,True,0,CORRECT,0.71,511,40,"Acme observes 11 public holidays per year. (Source: leave_policy.md, ""Public Holidays"" section.)"
+N07,True,0,CORRECT,2.91,1201,195,"Your password must be at least 14 characters long and changed every 180 days. (Source: it_security_policy.md, ""Passwords"" section.)"
+N08,True,0,CORRECT,1.03,403,43,"Your password must be changed every 180 days, according to the IT Security Policy (it_security_policy.md, ""Passwords"" section)."
+N09,True,0,CORRECT,1.68,612,131,"You should use the Acme Authenticator app for multi-factor authentication. MFA is required for email, the HR Portal, and the VPN. (Source: it_security_policy.md)"
+N10,True,0,CORRECT,1.33,370,67,"You should report the loss to the IT Service Desk within 24 hours. The laptop uses full-disk encryption, which helps protect its data. (Source: it_security_policy.md, ""Devices"" section.)"
+N11,True,0,CORRECT,0.93,284,43,"No. According to the IT Security Policy (it_security_policy.md), personal USB storage devices are not allowed on company laptops."
+N12,True,0,CORRECT,0.92,440,63,You have 30 days from the date of purchase to submit an expense claim in the Expense Portal. Claims submitted after 30 days need written approval from a director. (Source: expense_policy.md)
+N13,True,0,CORRECT,2.05,766,129,"The hotel limit is $200 per night in most cities and $300 per night in high-cost cities listed in the Travel Guide. (Source: expense_policy.md, Travel section.)"
+N14,True,0,CORRECT,0.92,412,59,"Only for flights longer than eight hours. Flights must otherwise be booked through the Acme Travel Desk in economy class. (Source: expense_policy.md, Travel section)"
+N15,True,0,CORRECT,2.03,729,127,"The home office stipend is $500, one time, for a desk, chair, or monitor. Receipts are required. (Source: expense_policy.md, ""Home Office"")"
+U01,False,0,CORRECT,1.52,501,73,"I don't know. The documents I have cover PTO, sick leave, and how to request time off (leave_policy.md), but they don't include a parental leave policy. You may want to check with HR directly or look for a separate parental leave document."
+U02,False,0,CORRECT,0.07,0,0,I don't know based on Acme's documents. Please contact HR or the IT Service Desk.
+U03,False,0,CORRECT,0.94,259,40,"I don't know. The documents I have only cover the home office stipend in the expense policy, and they don't mention office pet policies."
+N16,True,0,CORRECT,1.13,500,84,"PTO accrues monthly at 1.67 days per month for full-time employees, starting from their first day. Part-time employees accrue in proportion to their scheduled hours. (Source: leave_policy.md, ""Paid Time Off (PTO)"" section)"
+N17,True,0,CORRECT,1.03,483,83,"Part-time employees receive PTO in proportion to their scheduled hours. The documents don't give an exact figure for part-time employees, so you'd need to check with HR for the specific calculation. (Source: leave_policy.md, Paid Time Off section)"
+N18,True,0,CORRECT,0.95,507,47,"Your manager should approve or decline a PTO request within five working days. (Source: leave_policy.md, ""Requesting Time Off"" section.)"
+N19,True,0,CORRECT,1.64,504,60,"No. Per the Sick Leave section of the leave policy (leave_policy.md), employees receive 10 days of paid sick leave per year, and unused sick leave does not carry over."
+N20,True,0,CORRECT,0.72,345,47,"The holiday calendar is published in the HR Portal every December for the following year. (Source: leave_policy.md, ""Public Holidays"" section)"
+N21,True,0,CORRECT,1.43,403,41,"No. Under the IT Security Policy (it_security_policy.md), you may not reuse any of your last 10 passwords."
+N22,True,0,CORRECT,1.03,271,42,"You should install the Acme VPN client from the Acme Software Center only. (Source: it_security_policy.md, VPN section)"
+N23,True,0,CORRECT,1.52,256,49,"You can report a suspicious email by using the **Report Phish** button in your mail client. (Source: it_security_policy.md, ""Phishing"" section)"
+N24,True,0,CORRECT,0.82,491,43,"The daily meal allowance on business trips is up to $75 per day. (Source: expense_policy.md, ""Meals"" section.)"
+N25,True,0,CORRECT,0.97,491,50,"Client dinners are reimbursed up to $100 per person, and you must list the names of all attendees. (Source: expense_policy.md, Meals section)"
+N26,True,0,CORRECT,1.49,465,50,"Not normally. Under the expense policy (expense_policy.md, Meals section), alcohol is not reimbursed unless a director pre-approves it."
+N27,True,0,CORRECT,0.77,448,43,"Approved expenses are paid with the next monthly payroll. (Source: expense_policy.md, ""Reimbursement"" section)"
+U04,False,0,CORRECT,0.05,0,0,I don't know based on Acme's documents. Please contact HR or the IT Service Desk.
+U05,False,0,CORRECT,1.92,555,59,I don't know. The documents I have (expense policy and leave policy) don't mention tuition reimbursement. You may want to check with HR directly or look for a separate education benefits policy.
+U06,False,0,CORRECT,0.05,0,0,I don't know based on Acme's documents. Please contact HR or the IT Service Desk.
