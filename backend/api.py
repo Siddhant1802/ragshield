@@ -1,3 +1,5 @@
+from fastapi import UploadFile, File, Form
+import kb
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -58,7 +60,7 @@ def list_defenses():
 def ask_endpoint(req: AskRequest):
     if req.defense not in DEFENSES:
         raise HTTPException(status_code=400, detail=f"Unknown defense '{req.defense}'")
-    result = ask(req.question, defense=DEFENSES[req.defense])
+    result = ask(req.question, vector_store=kb.get_store(), defense=DEFENSES[req.defense])
     return {
         "question": req.question,
         "defense": req.defense,
@@ -67,3 +69,24 @@ def ask_endpoint(req: AskRequest):
         "blocked": result["blocked"],
         "trace": build_trace(result),
     }
+
+@app.get("/api/documents")
+def get_documents():
+    return {"documents": kb.list_documents()}
+
+
+@app.post("/api/documents")
+async def upload_document(file: UploadFile = File(...), trust: str = Form("untrusted")):
+    try:
+        data = await file.read()
+        info = kb.add_document(file.filename, data, trust)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return {"uploaded": info, "documents": kb.list_documents()}
+
+
+@app.delete("/api/documents/{name}")
+def delete_document(name: str):
+    if not kb.remove_document(name):
+        raise HTTPException(status_code=404, detail="File not found or is a built-in document")
+    return {"removed": name, "documents": kb.list_documents()}
