@@ -15,7 +15,7 @@ from loaders import load_documents, load_file
 from rag import ask
 from vectorstore import get_embeddings
 
-RUNS = 5  # repetitions per attack
+RUNS = 3  # repetitions per attack
 
 # Claude Haiku 5.5 prices (USD per token), from the Claude API pricing page
 PRICE_IN = 0.10 / 1_000_000
