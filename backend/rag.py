@@ -10,6 +10,7 @@ load_dotenv()
 MIN_RELEVANCE = 0.25   # chosen from Step 5: real answers scored 0.44+, off-topic under 0.06
 TOP_K = 3              # how many chunks to retrieve
 NO_ANSWER = "I don't know based on Acme's documents. Please contact HR or the IT Service Desk."
+BLOCKED_ANSWER = "Sorry, I can't help with that request. Please ask a question about Acme's HR or IT policies."
 
 store = load_vectorstore()
 llm = ChatAnthropic(model="claude-haiku-5-5")
@@ -47,7 +48,7 @@ def format_docs_isolated(docs):
     """Wrap each chunk in its own <document> tag, labelled with its source."""
     parts = []
     for i, d in enumerate(docs, start=1):
-        # Stop a document from 'closing' its own tag early and escaping the wrapper
+    # Stop a document from 'closing' its own tag early and escaping the wrapper
         text = d.page_content.replace("</document>", "")
         parts.append(f'<document index="{i}" source="{d.metadata["source"]}">\n{text}\n</document>')
     return "\n\n".join(parts)
@@ -67,6 +68,12 @@ def ask(question: str, vector_store=None, defense=None) -> dict:
     vs = vector_store or store    # use the given store, or the clean Acme index
     defense = defense or {}       # no defense = empty settings
     blocked = []
+    # 0. INPUT GUARD: check the question before doing anything else
+    if defense.get("input"):
+        ok, reason = defense["input"](question)
+        if not ok:
+            return {"answer": BLOCKED_ANSWER, "sources": [],
+                    "blocked": [{"source": "question", "section": "-", "reason": reason}]}
 
     # 1. RETRIEVE: find the closest chunks, with scores
     results = vs.similarity_search_with_relevance_scores(question, k=TOP_K)

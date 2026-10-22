@@ -109,6 +109,33 @@ def llm_judge_filter(docs):
         else:
             kept.append(doc)
     return kept, blocked
+
+# ---------------- Input guard: check the employee's question ----------------
+MAX_QUESTION_CHARS = 1000
+
+# Phrases typical of DIRECT prompt injection (typed by the user)
+INPUT_PATTERNS = [
+    r"\b(ignore|disregard|forget|override)\b.{0,30}\b(instructions|rules|guidelines|prompt)\b",
+    r"\b(reveal|print|show|repeat|output)\b.{0,30}\b(system prompt|instructions|rules)\b",
+    r"\byou are now\b",
+    r"\b(developer|god|jailbreak|dan) mode\b",
+    r"\bpretend (that )?you\b",
+    r"\bact as\b",
+]
+_INPUT_COMPILED = [re.compile(p, re.IGNORECASE) for p in INPUT_PATTERNS]
+
+
+def input_guard(question):
+    """Return (True, "") if the question is OK, or (False, reason) if it should be blocked."""
+    q = question.strip()
+    if not q:
+        return False, "input: empty question"
+    if len(q) > MAX_QUESTION_CHARS:
+        return False, f"input: question longer than {MAX_QUESTION_CHARS} characters"
+    for p in _INPUT_COMPILED:
+        if p.search(q):
+            return False, f"input: {p.pattern}"
+    return True, ""
 # ---------------- Output guard: link allowlist ----------------
 ALLOWED_DOMAINS = ("acme.example",)   # the company's official domains
 
@@ -154,6 +181,8 @@ def link_allowlist(answer):
 
 
 
+
+
 # Each defense says which stage(s) of the pipeline it protects:
 #   "retrieval": a function that removes suspicious chunks before Claude sees them
 #   "isolation": True to use the isolated prompt
@@ -165,4 +194,5 @@ DEFENSES = {
     "llm_judge": {"retrieval": llm_judge_filter},
     "isolation": {"isolation": True},
     "allowlist": {"output": link_allowlist},
+    "input": {"input": input_guard},
 }
