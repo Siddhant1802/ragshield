@@ -1,3 +1,4 @@
+import results_api
 from fastapi import UploadFile, File, Form
 import kb
 from fastapi import FastAPI, HTTPException
@@ -12,7 +13,7 @@ app = FastAPI(title="RAGShield API")
 # Allow the React app (which runs on port 5173) to call this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173","http://localhost:3000"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -90,3 +91,7 @@ def delete_document(name: str):
     if not kb.remove_document(name):
         raise HTTPException(status_code=404, detail="File not found or is a built-in document")
     return {"removed": name, "documents": kb.list_documents()}
+
+@app.get("/api/results")
+def get_results():
+    return {"results": results_api.summary()}
